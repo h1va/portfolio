@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiva | QA Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #050505;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Balanced Pulse Indicator */
+        .status-tag {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .dot { 
+            width: 7px; 
+            height: 7px; 
+            background: #00ff88; 
+            border-radius: 50%; 
+            position: relative;
+        }
+
+        /* Perfect middle-ground pulse */
+        .dot::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: pulse 2.2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(2.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        h1 { 
+            font-size: 3.5rem; 
+            font-weight: 800;
+            margin: 0; 
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+
+        p.tagline { color: #666; font-size: 1.1rem; margin-top: 10px; }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: auto;
+        }
+
+        .card {
+            position: relative;
+            height: 240px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            border: 1px solid #222;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card:hover { transform: translateY(-8px); border-color: #444; }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,1) 15%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1));
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .game-title { font-size: 1.6rem; font-weight: 700; margin: 0; }
+        .visits { color: #00ff88; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 4px; }
+
+        .details {
+            font-size: 0.95rem;
+            color: #aaa;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .details { max-height: 100px; opacity: 1; margin-top: 12px; }
+
+        .bluelock { background-image: url('blrthumb.webp'); }
+        .ultimate { background-image: url('usthumb.webp'); }
+        .powerup { background-image: url('pusthumb.webp'); }
+
+        /* Footer */
+        footer {
+            padding-bottom: 30px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-btn:hover { opacity: 1; }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(15px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 50px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-content { transform: scale(1); }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #444;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover { color: white; }
+
+        .stat-item { margin: 35px 0; }
+        .stat-value { font-size: 3rem; font-weight: 800; color: #00ff88; display: block; letter-spacing: -1px; }
+        .stat-label { color: #555; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; }
+
+        .fade-in { animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            html, body { overflow-y: auto; height: auto; }
+            footer { flex-direction: column; align-items: center; gap: 20px; padding-bottom: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="status-tag"><span class="dot"></span>Available for work</div>
+        <h1>HIVA</h1>
+        <p class="tagline">QA Tester for high-traffic Roblox experiences.</p>
+    </header>
+
+    <div class="portfolio-grid">
+        <div class="card bluelock">
+            <div class="overlay">
+                <span class="visits">4.4B+ VISITS</span>
+                <p class="game-title">Blue Lock: Rivals</p>
+                <div class="details">Greatly improved the competitive potential of the game.</div>
+            </div>
+        </div>
+        <div class="card ultimate">
+            <div class="overlay">
+                <span class="visits">79.9M VISITS</span>
+                <p class="game-title">Ultimate Soccer</p>
+                <div class="details">Focused mostly on game balance and flow.</div>
+            </div>
+        </div>
+        <div class="card powerup">
+            <div class="overlay">
+                <span class="visits">30.7M VISITS</span>
+                <p class="game-title">Power-Up Soccer</p>
+                <div class="details">Fixed and addressed many balancing issues, as well as critical bugs.</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <button class="footer-btn" onclick="openStats()">Stats</button>
+        <button id="contactBtn" class="footer-btn" onclick="showDiscord()">Contact me</button>
+    </footer>
+
+    <div id="statsModal" class="modal-overlay" onclick="closeStats()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeStats()">×</button>
+            <div class="stat-item">
+                <span class="stat-value">4.5B+</span>
+                <span class="stat-label">Total Visits Tested</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">3</span>
+                <span class="stat-label">Front-Page Titles</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDiscord() {
+            const btn = document.getElementById("contactBtn");
+            btn.innerHTML = "Discord: dragon312";
+            btn.classList.add("fade-in");
+            btn.style.opacity = "1";
+            btn.onclick = null;
+        }
+
+        function openStats() {
+            const modal = document.getElementById('statsModal');
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('active'); }, 10);
+        }
+
+        function closeStats() {
+            const modal = document.getElementById('statsModal');
+            modal.classList.remove('active');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+    </script>
+
+</body>
+</html>
