@@ -25,17 +25,17 @@
             background-color: var(--bg);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 60px 20px;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .status-badge {
@@ -86,13 +86,41 @@
 
         .tagline { color: var(--text-dim); font-size: 1.1rem; margin-top: 10px; }
 
+        main {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: auto; /* Pushes footer down */
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 30px 0 20px;
+            gap: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            font-weight: 700;
+        }
+
+        .section-line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--card-border);
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 30px;
             width: 100%;
-            max-width: 1200px;
-            margin-bottom: auto;
         }
 
         .project-card {
@@ -137,8 +165,19 @@
         .ultimate { background-image: url('usthumb.webp'); }
         .powerup { background-image: url('pusthumb.webp'); }
 
+        .empty-slot {
+            width: 100%;
+            padding: 40px;
+            border: 1px dashed var(--card-border);
+            border-radius: 16px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 40px;
+        }
+
         footer {
-            padding-bottom: 30px;
+            padding: 30px 0;
             display: flex;
             gap: 40px;
         }
@@ -202,7 +241,6 @@
         .m-label { color: #555; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; }
 
         @media (max-width: 768px) {
-            body { overflow-y: auto; height: auto; }
             footer { flex-direction: column; align-items: center; gap: 20px; padding-bottom: 50px; }
         }
     </style>
@@ -215,29 +253,45 @@
         <p class="tagline">QA Tester for high-traffic Roblox experiences.</p>
     </header>
 
-    <div class="grid">
-        <div class="project-card bluelock">
-            <div class="card-overlay">
-                <span class="stat">4.4B+ VISITS</span>
-                <p class="title">Blue Lock: Rivals</p>
-                <div class="desc">Greatly improved the competitive potential of the game.</div>
+    <main>
+        <div class="section-header">
+            <h2>Previous Projects</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="grid">
+            <div class="project-card bluelock">
+                <div class="card-overlay">
+                    <span class="stat">4.4B+ VISITS</span>
+                    <p class="title">Blue Lock: Rivals</p>
+                    <div class="desc">Greatly improved the competitive potential of the game.</div>
+                </div>
+            </div>
+            <div class="project-card ultimate">
+                <div class="card-overlay">
+                    <span class="stat">79.9M VISITS</span>
+                    <p class="title">Ultimate Soccer</p>
+                    <div class="desc">Focused mostly on game balance and flow.</div>
+                </div>
+            </div>
+            <div class="project-card powerup">
+                <div class="card-overlay">
+                    <span class="stat">30.7M VISITS</span>
+                    <p class="title">Power-Up Soccer</p>
+                    <div class="desc">Fixed and addressed many balancing issues, as well as critical bugs.</div>
+                </div>
             </div>
         </div>
-        <div class="project-card ultimate">
-            <div class="card-overlay">
-                <span class="stat">79.9M VISITS</span>
-                <p class="title">Ultimate Soccer</p>
-                <div class="desc">Focused mostly on game balance and flow.</div>
-            </div>
+
+        <div class="section-header">
+            <h2>Currently Testing</h2>
+            <div class="section-line"></div>
         </div>
-        <div class="project-card powerup">
-            <div class="card-overlay">
-                <span class="stat">30.7M VISITS</span>
-                <p class="title">Power-Up Soccer</p>
-                <div class="desc">Fixed and addressed many balancing issues, as well as critical bugs.</div>
-            </div>
+
+        <div class="empty-slot">
+            Ready for a new project. Contact me to discuss QA needs.
         </div>
-    </div>
+    </main>
 
     <footer>
         <button class="btn" onclick="toggleStats(true)">Stats</button>
