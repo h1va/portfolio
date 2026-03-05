@@ -91,7 +91,7 @@
             max-width: 1200px;
             display: flex;
             flex-direction: column;
-            margin-bottom: auto; /* Pushes footer down */
+            margin-bottom: auto;
         }
 
         .section-header {
@@ -108,6 +108,7 @@
             letter-spacing: 2px;
             color: var(--text-dim);
             font-weight: 700;
+            white-space: nowrap;
         }
 
         .section-line {
@@ -195,6 +196,39 @@
 
         .btn:hover { opacity: 1; }
 
+        /* New styles for the Discord contact button */
+        .contact-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px; /* Spaces icon from text */
+            padding: 8px 12px;
+            border: 1px solid transparent; /* Prevents button jump on border add */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-main); /* Base color */
+            opacity: 0.5; /* Base dim state */
+        }
+
+        .contact-container:hover {
+            opacity: 1; /* full white on hover */
+            border-color: var(--card-border); /* Subtle border for interaction feedback */
+        }
+
+        .discord-icon {
+            height: 18px; /* Adjust height to match button */
+            width: auto;
+            /* Initial grayscale and dimming, matches other elements */
+            filter: brightness(0) saturate(100%) invert(43%) sepia(3%) saturate(23%) hue-rotate(188deg) brightness(89%) contrast(92%);
+            transition: filter 0.3s ease;
+        }
+
+        .contact-container:hover .discord-icon {
+            /* Full white on hover, like text */
+            filter: brightness(0) invert(100%);
+        }
+
         .modal {
             position: fixed;
             inset: 0;
@@ -255,6 +289,7 @@
 
     <main>
         <div class="section-header">
+            <div class="section-line"></div>
             <h2>Previous Projects</h2>
             <div class="section-line"></div>
         </div>
@@ -284,18 +319,21 @@
         </div>
 
         <div class="section-header">
+            <div class="section-line"></div>
             <h2>Currently Testing</h2>
             <div class="section-line"></div>
         </div>
 
         <div class="empty-slot">
-            Ready for a new project. Contact me to discuss QA needs.
+            No projects right now, contact me!
         </div>
     </main>
 
     <footer>
         <button class="btn" onclick="toggleStats(true)">Stats</button>
-        <button id="contact" class="btn" onclick="copyDiscord()">Contact me</button>
+        <div id="contact" class="contact-container" onclick="copyDiscord()">
+            <span class="contact-text">Contact me</span>
+            <img src="image_2.png" alt="Discord Icon" class="discord-icon"> </div>
     </footer>
 
     <div id="statsModal" class="modal" onclick="toggleStats(false)">
@@ -314,7 +352,7 @@
 
     <script>
         const modal = document.getElementById('statsModal');
-        const contactBtn = document.getElementById('contact');
+        const contactText = document.querySelector('.contact-text'); /* Updated to select text span */
 
         function toggleStats(open) {
             if (open) {
@@ -329,10 +367,7 @@
         function copyDiscord() {
             const username = "dragon312";
             navigator.clipboard.writeText(username).then(() => {
-                contactBtn.innerText = "Copied: " + username;
-                contactBtn.style.opacity = "1";
-                contactBtn.style.color = "#00ff88";
-                setTimeout(() => contactBtn.style.color = "#fff", 1000);
+                contactText.innerText = "Copied: " + username; /* cite: 1 */
             });
         }
     </script>
