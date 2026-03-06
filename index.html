@@ -124,6 +124,11 @@
             width: 100%;
         }
 
+        /* FIXED: This rule ensures single-card grids don't stretch */
+        .grid.single-col {
+            grid-template-columns: minmax(340px, 1fr) 1fr;
+        }
+
         .project-card {
             position: relative;
             height: 240px;
@@ -264,6 +269,8 @@
 
         @media (max-width: 768px) {
             footer { flex-direction: column; align-items: center; gap: 20px; padding-bottom: 50px; }
+            /* FIXED: Ensures it also stacks nicely on mobile */
+            .grid.single-col { grid-template-columns: minmax(340px, 1fr); } 
         }
     </style>
 </head>
@@ -272,7 +279,7 @@
     <header>
         <div class="status-badge"><span class="status-dot"></span>Available for work</div>
         <h1>HIVA</h1>
-        <p class="tagline">QA Tester for high-traffic Roblox experiences.</p>
+        <p class="tagline">Playtester for high-traffic Roblox experiences.</p>
     </header>
 
     <main>
@@ -312,7 +319,7 @@
             <div class="section-line"></div>
         </div>
 
-        <div class="grid">
+        <div class="grid single-col">
             <div class="project-card dashworld">
                 <div class="card-overlay">
                     <span class="stat">110M VISITS</span>
